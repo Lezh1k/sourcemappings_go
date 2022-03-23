@@ -2,7 +2,9 @@ package sourcemappings
 
 import (
 	"fmt"
+
 	"github.com/stretchr/testify/require"
+
 	"strings"
 	"sync"
 	"testing"
@@ -37,7 +39,6 @@ func TestSourcemappings(t *testing.T) {
 	nd, err := NodeAt(src, 26829999)
 	require.NoError(t, err)
 	fmt.Println(nd)
-
 	// src := "1:2:1;:9;2:1:2;;"
 	// for i := 0; i < 5; i++ {
 	// 	nd, err := nodeAt(src, i)

@@ -1,10 +1,12 @@
 package main
 
 import (
+	"encoding/json"
 	"flag"
 	"fmt"
 	"io"
 	"os"
+	"sourcemappings/sourcemappings"
 )
 
 type smFlags struct {
@@ -18,13 +20,13 @@ func main() {
 	smf.ptrNodeIndex = flag.Int("sm_node_index", 0, "Index of node that should be found in sourcemappings string that will be taken from sm_file_path")
 	flag.Parse()
 
-	if smf.ptrFilePath == nil {
-		fmt.Printf("Please provide file in sm_file_path argument")
+	if smf.ptrFilePath == nil || *smf.ptrFilePath == "" {
+		fmt.Println("Please provide file in sm_file_path argument")
 		os.Exit(1)
 	}
 
 	if smf.ptrNodeIndex == nil {
-		fmt.Printf("Please provide index in sm_node_index argument")
+		fmt.Println("Please provide index in sm_node_index argument")
 		os.Exit(2)
 	}
 
@@ -43,9 +45,14 @@ func main() {
 
 	node, err := sourcemappings.NodeAt(string(buff), *smf.ptrNodeIndex)
 	if err != nil {
-		fmt.Printf("Failed to find node at index %d. Error: %s\n", err.Error())
+		fmt.Printf("Failed to find node at index %d. Error: %s\n", *smf.ptrNodeIndex, err.Error())
 		os.Exit(5)
 	}
 
-	fmt.Println(node)
+	output, err := json.Marshal(&node)
+	if err != nil {
+		fmt.Println("failed to marshal result to JSON")
+		os.Exit(6)
+	}
+	fmt.Println(string(output))
 }
