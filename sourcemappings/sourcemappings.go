@@ -9,23 +9,30 @@ type Node struct {
 	S, L, F, J, M string
 }
 
-func NodeAt(input string, ix int) (Node, error) {
+func NodeAt(input string) ([]Node, error) {
 	var prevNode Node
-	nodes_count, start := -1, 0
-	for ; nodes_count < ix && start < len(input); nodes_count++ {
+	var result []Node
+	start := 0
+	var inpLen = len(input)
+
+	for start < inpLen {
 		tail := strings.IndexByte(input[start:], byte(';'))
 		sub := input[start:]
 		if tail != -1 {
 			sub = input[start : start+tail]
+			start += tail + 1
+		} else {
+			start += len(sub)
 		}
-		start += tail + 1
+
 		if len(sub) == 0 {
+			result = append(result, prevNode)
 			continue // do nothing, we have full duplicate of previous node
 		}
 
 		parts := strings.Split(sub, ":")
 		if len(parts) > 5 || len(parts) < 1 {
-			return prevNode, errors.New("invalid input")
+			return result, errors.New("invalid input")
 		}
 
 		switch len(parts) {
@@ -54,6 +61,7 @@ func NodeAt(input string, ix int) (Node, error) {
 				prevNode.S = parts[0]
 			}
 		}
+		result = append(result, prevNode)
 	}
-	return prevNode, nil
+	return result, nil
 }
