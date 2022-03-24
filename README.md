@@ -1,7 +1,20 @@
-## BUILD
+# Sourcemappings_go
 
-make
+## Описание (Description)
 
-## USAGE
+Достаточно быстрый (в сравнении с решением на python) инструмент для поиска ноды в строке формата solidity sourcemappings.
 
-./bin/sourcmappings_finder -sm_file_path=/home/lezh1k/SRC/test_data/sourcemapping -sm_node_index=2
+## Технологии (Technologies)
+
+*  [Python](https://www.python.org/) - Computer language. 
+*  [Go](https://www.golang.org) - Computer language 
+
+## Как запустить\использовать\установить (How to run)
+
+`make` - исполняемый файл будет в папке bin. 
+Пример использования в usage_example.py
+
+## The roadmap
+
+- [x] Составить роадмап
+- [ ] Грачевать
