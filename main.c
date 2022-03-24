@@ -46,6 +46,10 @@ static cnode_t node_at(const char *str, int ix) {
   char *tok_node, *tok_part;
   int nc = -1;
   const char **dst[5] = {&res.s, &res.l, &res.f, &res.j, &res.m};
+
+  char mask[8] = {';',';',';',';',';',';',';',';'};
+  int imask = (*(int*)mask);
+
   for (; (tok_node = strchr(str, ';')) != NULL && nc < ix; ++nc) {
     const char ***p_dst = dst;
     for (tok_part = strchr(str, ':');
@@ -59,6 +63,11 @@ static cnode_t node_at(const char *str, int ix) {
     if (tok_node - str)
       **p_dst = str;
     str = tok_node+1;
+
+    while ((*(int*)str) == imask && nc < ix) { // todo check somehow that we are not out of string bounds
+      str += 8;
+      nc += 8;
+    }
   }
 
   int *dst_s[5] = {&res.s_, &res.l_, &res.f_, &res.j_, &res.m_};
