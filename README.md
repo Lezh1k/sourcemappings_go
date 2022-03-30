@@ -1,4 +1,4 @@
-# Sourcemappings_go
+# Sourcemappings tests
 
 ## Описание (Description)
 
